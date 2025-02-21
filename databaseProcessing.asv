@@ -17,31 +17,21 @@ theFilesJPEG = dir(filePatternJPEG);
 
 theFiles = [theFilesPNG,theFilesJPG, theFilesJPEG];
 
-croppedImages = {};
-scaledImages = {};
-
 for k = 1 : length(theFiles)
     baseFileName = theFiles(k).name;
     fullFileName = fullfile(theFiles(k).folder, baseFileName);
     IMG = imread(append(filePathRaw,baseFileName));
-
     
     imgHeight = size(IMG,1);
     imgWidth = size(IMG,2);
-    
+
+    imshow(IMG);
     if(imgHeight > imgWidth)
-        IMGcrop = imcrop(IMG, [floor((imgWidth-imgHeight)/2) floor((imgWidth-imgHeight)/2) floor((imgWidth+imgHeight)/2) floor((imgWidth+imgHeight)/2)]);
-        IMGres=imresize(IMG,[imgWidth imgWidth],'bicubic');
+        IMG = imcrop(IMG, [0 floor((imgWidth-imgHeight)/2) imgWidth floor((imgWidth+imgHeight)/2) ]);
     elseif(imgHeight < imgWidth)
-        IMGcrop = imcrop(IMG, [floor((imgHeight-imgWidth)/2) floor((imgHeight-imgWidth)/2) floor((imgHeight+imgWidth)/2) floor((imgHeight+imgWidth)/2)]);
-        IMGres=imresize(IMG,[imgHeight imgHeight],'bicubic');
+        IMG = imcrop(IMG, [((imgWidth/2) - (imgHeight/2))  0 ((imgWidth/2) + (imgHeight /2)) imgWidth]);
     end
-
-    croppedImages = [croppedImages, IMGcrop];
-    scaledImages = [scaledImages, IMGres];
+    imgHeight = size(IMG,1);
+    imgWidth = size(IMG,2);
+    imshow(IMG);
 end
-
-figure;
-montage(croppedImages, "size", [1 3]);
-figure;
-montage(scaledImages, "size", [1 3]);
