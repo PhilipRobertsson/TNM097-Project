@@ -2,8 +2,8 @@ function [imgCell] = splitIntoSegments(imgInput)
 %Used to split input image into qudaratic segments
 
 % Divide image into smaller segments
-segmentSizeR = floor(size(imgInput,1) * (10/100)); % R, rows
-segmentSizeC = floor(size(imgInput,1) * (10/100)); % C, columns
+segmentSizeR = floor(size(imgInput,1) * (8/100)); % R, rows
+segmentSizeC = floor(size(imgInput,1) * (8/100)); % C, columns
 [rows, columns, channels] = size(imgInput);
 
 % Number of segments for rows
@@ -23,21 +23,6 @@ if channels > 1
 else
     % Grayscale
     imgCell = mat2cell(imgInput, SegmentVectorR, SegmentVectorC);
-end
-
-% Index for subplot
-plotIndex = 1;
-% Number of subplots needed, rows, columns
-[numPlotsR, numPlotsC] = size(imgCell);
-for r = 1 : numPlotsR
-    for c = 1 : numPlotsC
-        % Subplot used to draw image split up in segments
-        subplot(numPlotsR, numPlotsC, plotIndex);
-        % Draw specified cell
-        imshow(imgCell{r,c}); 
-        % Increment the subplot to the next location.
-        plotIndex = plotIndex + 1;
-    end
 end
 
 end
