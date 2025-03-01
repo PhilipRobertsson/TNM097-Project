@@ -11,3 +11,5 @@ imshow(imgInput);
 
 imgCell = splitIntoSegments(imgInput);
 
+avgRGBTest = findAvgRGB(imgCell(1,1))
+
