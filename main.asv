@@ -43,13 +43,15 @@ outputIMG = cell(size(imgCell));
 
 for k = 1 : length(imgCell)
     for i = 1 : length(imgCell)
-        [~,indexToClosestMatch] = min(cellfun(@(x)min(abs(x-avgRGBCell{i,k})),databaseAvgRGBs(:,1)));
+        [~,indexToClosestMatch] = min(cellfun(@(x)min(abs(x-avgRGBCell{k,i})),databaseAvgRGBs(:,1)));
         outputIMG{k,i} = im2double(imread(string(databaseAvgRGBs(indexToClosestMatch,2))));
     end
 end
 
-
+original = imgInput;
 result = montage(outputIMG);
 
-
-
+subplot(1,2,1);
+imshow(original);
+subplot(1,2,2);
+imshow(result);
