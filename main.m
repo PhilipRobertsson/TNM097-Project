@@ -1,7 +1,7 @@
 % Add folders and subfolders to path
 addpath("functions\") % Functions
 addpath("images\processed\") % Processed Images
-databaseAvgRGBs = findAvgRGBDatabase(); % Get avrage rgb for database images
+[databaseAvgRGBs, databaseAvgLabs] = findAvgRGBDatabase(); % Get avrage rgb for database images
 
 % Image loading
 filterspec = {'*.jpg;*.tif;*.png;*.gif','All Image Files'};
@@ -16,7 +16,7 @@ imgCell = splitIntoSegments(imgInput);
 
 % Cell containing avrage RGB values for each cell in imgCell
 avgRGBCell = cell(size(imgCell));
-
+avgLabCell = cell(size(imgCell));
 
 
 % Number of subplots needed, rows, columns
@@ -28,7 +28,7 @@ for r = 1 : numPlotsR
         % Draw specified cell
         %imshow(imgCell{r,c});
         % Take avrage rgb
-        avgRGBCell{r,c} = findAvgRGB(imgCell(r,c));
+        [avgRGBCell{r,c}, avgLabCell{r,c}] = findAvgRGB(imgCell(r,c));
         % Increment the subplot to the next location.
         %plotIndex = plotIndex + 1;
     end
@@ -39,21 +39,26 @@ end
 %closestMatch = im2double(imread(string(databaseAvgRGBs(indexToClosestMatch,2))));
 
 outputIMG = cell(size(imgCell));
+outputIMGLab = cell(size(imgCell));
 
 [rows, cols] = size(outputIMG);
 
 
-plotIndex = 1;
-
 for r = 1 : rows
     for c = 1 : cols
-        [~,indexToClosestMatch] = min(cellfun(@(x)min(abs(x-avgRGBCell{r,c})),databaseAvgRGBs(:,1)));
-        outputIMG{r,c} = im2double(imread(string(databaseAvgRGBs(indexToClosestMatch,2))));
+        %[~,indexToClosestMatch] = min(cellfun(@(x)min(abs(x-avgRGBCell{r,c})),databaseAvgRGBs(:,1)));
+        %outputIMG{r,c} = im2double(imread(string(databaseAvgRGBs(indexToClosestMatch,2))));
+
+        indexToClosestMatchLab = findSmallestDistE(avgLabCell{r,c},databaseAvgLabs);
+        outputIMGLab{r,c} = im2double(imread(string(databaseAvgLabs(indexToClosestMatchLab,2))));
     end
 end
 
-outputIMGmat = cell2mat(outputIMG);
-imshow(outputIMGmat);
+%outputIMGmat = cell2mat(outputIMG);
+outputIMGmatLab = cell2mat(outputIMGLab);
+%imshow(outputIMGmat);
+imshow(outputIMGmatLab);
+%montage({imgInput, outputIMGmatLab});
 
 
 
