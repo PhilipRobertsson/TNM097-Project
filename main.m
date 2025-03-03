@@ -19,7 +19,6 @@ avgRGBCell = cell(size(imgCell));
 
 
 
-plotIndex = 1;
 % Number of subplots needed, rows, columns
 [numPlotsR, numPlotsC] = size(imgCell);
 for r = 1 : numPlotsR
@@ -41,15 +40,21 @@ end
 
 outputIMG = cell(size(imgCell));
 
-for k = 1 : length(imgCell)
-    for i = 1 : length(imgCell)
-        [~,indexToClosestMatch] = min(cellfun(@(x)min(abs(x-avgRGBCell{i,k})),databaseAvgRGBs(:,1)));
-        outputIMG{k,i} = im2double(imread(string(databaseAvgRGBs(indexToClosestMatch,2))));
+[rows, cols] = size(outputIMG);
+
+
+plotIndex = 1;
+
+for r = 1 : rows
+    for c = 1 : cols
+        [~,indexToClosestMatch] = min(cellfun(@(x)min(abs(x-avgRGBCell{r,c})),databaseAvgRGBs(:,1)));
+        outputIMG{r,c} = im2double(imread(string(databaseAvgRGBs(indexToClosestMatch,2))));
     end
 end
 
+outputIMGmat = cell2mat(outputIMG);
+imshow(outputIMGmat);
 
-result = montage(outputIMG);
 
 
 

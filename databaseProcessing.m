@@ -70,6 +70,13 @@ for k = 1 : length(theFiles)
     else
         IMGres = IMG;
     end
+    
+    if(size(IMGres,3) ~= 3)
+        cmap = cmap2gray(jet(256));
+        IMGres = ind2rgb(IMGres,cmap);
+    end
+    IMGres = imresize(IMGres, [64 64], 'bicubic');
+
     fullFileName = fullfile(filePathProc, baseFileName);
     imwrite(IMGres, fullFileName);
     scaledImages = [scaledImages, IMGres];
