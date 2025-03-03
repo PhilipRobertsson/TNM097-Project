@@ -59,6 +59,11 @@ for k = 1 : length(theFiles)
     baseFileName = theFiles(k).name;
     fullFileName = fullfile(theFiles(k).folder, baseFileName);
     IMG = imread(append(filePathRaw,baseFileName));
+    
+    % Used to find rgb images not in true colour
+    %if(imfinfo(append(filePathRaw,baseFileName)).BitDepth < 24)
+    %    imfinfo(append(filePathRaw,baseFileName))
+    %end
 
     imgHeight = size(IMG,1);
     imgWidth = size(IMG,2);
@@ -71,10 +76,11 @@ for k = 1 : length(theFiles)
         IMGres = IMG;
     end
     
+    % Grayscale image
     if(size(IMGres,3) ~= 3)
-        cmap = cmap2gray(jet(256));
-        IMGres = ind2rgb(IMGres,cmap);
+        IMGres = cat(3,IMGres,IMGres,IMGres);
     end
+
     IMGres = imresize(IMGres, [64 64], 'bicubic');
 
     fullFileName = fullfile(filePathProc, baseFileName);
