@@ -88,4 +88,4 @@ for k = 1 : length(theFiles)
     scaledImages = [scaledImages, IMGres];
 end
 
-montage(scaledImages);
+montage(scaledImages, "Size", [10 20]);

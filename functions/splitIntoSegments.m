@@ -2,8 +2,15 @@ function [imgCell] = splitIntoSegments(imgInput)
 %Used to split input image into qudaratic segments
 
 % Divide image into smaller segments
-segmentSizeR = floor(size(imgInput,1) * (5/300)); % R, rows
-segmentSizeC = floor(size(imgInput,1) * (5/300)); % C, columns
+
+if size(imgInput,1) >= size(imgInput,2)
+    segmentSize = floor(size(imgInput,1) * (5/300));
+else
+    segmentSize = floor(size(imgInput,2) * (5/300));
+end
+
+segmentSizeR = segmentSize; % R, rows
+segmentSizeC = segmentSize; % C, columns
 [rows, columns, channels] = size(imgInput);
 
 % Number of segments for rows
