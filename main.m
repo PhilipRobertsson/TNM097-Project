@@ -46,19 +46,43 @@ outputIMGLab = cell(size(imgCell));
 
 for r = 1 : rows
     for c = 1 : cols
-        %[~,indexToClosestMatch] = min(cellfun(@(x)min(abs(x-avgRGBCell{r,c})),databaseAvgRGBs(:,1)));
-        %outputIMG{r,c} = im2double(imread(string(databaseAvgRGBs(indexToClosestMatch,2))));
+        [~,indexToClosestMatch] = min(cellfun(@(x)min(abs(x-avgRGBCell{r,c})),databaseAvgRGBs(:,1)));
+        outputIMG{r,c} = im2double(imread(string(databaseAvgRGBs(indexToClosestMatch,2))));
 
         indexToClosestMatchLab = findSmallestDistE(avgLabCell{r,c},databaseAvgLabs);
         outputIMGLab{r,c} = im2double(imread(string(databaseAvgLabs(indexToClosestMatchLab,2))));
     end
 end
 
-%outputIMGmat = cell2mat(outputIMG);
+outputIMGmat = cell2mat(outputIMG);
 outputIMGmatLab = cell2mat(outputIMGLab);
 %imshow(outputIMGmat);
-imshow(outputIMGmatLab);
-%montage({imgInput, outputIMGmatLab});
+%imshow(outputIMGmatLab);
+montage({outputIMGmat, outputIMGmatLab});
+
+[mse, snr, snrHVS, meanDistE, maxDistE, meanDistEHVS, maxDistHVS, meanSCIELAB] = getQualityMetrics(imgInput, outputIMGmat);
+
+fprintf('\n The mean-squared error for the RGB reproduction is: %0.2f\n', mse);
+fprintf('\n The signal to noise ratio for the RGB reproduction is:  %0.2f\n', snr);
+fprintf('\n The signal to noise ratio for the RGB reproduction with HVS model is:  %0.2f\n', snrHVS);
+fprintf('\n The mean delta E value for the RGB reproduction is: %0.2f\n', meanDistE);
+fprintf('\n The max delta E value ratio for the RGB reproduction is:  %0.2f\n', maxDistE);
+fprintf('\n The mean delta E value for the RGB reproduction with HVS model is: %0.2f\n', meanDistEHVS);
+fprintf('\n The max delta E value ratio for the RGB reproduction with HVS model is:  %0.2f\n', maxDistHVS);
+fprintf('\n The mean  value S-CIELAB for the RGB reproduction is: %0.2f\n', meanSCIELAB);
+
+fprintf("\n");
+
+[mse, snr, snrHVS, meanDistE, maxDistE,  meanDistEHVS, maxDistHVS, meanSCIELAB] = getQualityMetrics(imgInput, outputIMGmatLab);
+
+fprintf('\n The mean-squared error for the Lab reproduction is: %0.2f\n', mse);
+fprintf('\n The signal to noise ratio for the Lab reproduction is:  %0.2f\n', snr);
+fprintf('\n The signal to noise ratio for the Lab reproduction with HVS model is:  %0.2f\n', snrHVS);
+fprintf('\n The mean delta E value for the Lab reproduction is: %0.2f\n', meanDistE);
+fprintf('\n The max delta E value ratio for the Lab reproduction is:  %0.2f\n', maxDistE);
+fprintf('\n The mean delta E value for the Lab reproduction with HVS model is: %0.2f\n', meanDistEHVS);
+fprintf('\n The max delta E value ratio for the Lab reproduction with HVS model is:  %0.2f\n', maxDistHVS);
+fprintf('\n The mean  value S-CIELAB for the Lab reproduction is: %0.2f\n', meanSCIELAB);
 
 
 

@@ -2,7 +2,7 @@ function [avgRGB,avgLab] = findAvgRGB(cellInput)
 
 % Convert the cell to a normal image matrix
 imgSquare = cell2mat(cellInput);
-imgSquareLab = rgb2lab(imgSquare);
+imgSquareLab = rgb2lab(im2double(imgSquare));
 
 % Variables to store rgb values
 if(size(imgSquare, 3) == 3)

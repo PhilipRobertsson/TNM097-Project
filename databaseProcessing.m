@@ -89,3 +89,24 @@ for k = 1 : length(theFiles)
 end
 
 montage(scaledImages, "Size", [10 20]);
+
+%[databaseAvgRGBs, ~] = findAvgRGBDatabase(); % Get avrage rgb for database images
+
+%load xyz.mat
+
+%d65 = [95.047, 100, 108.883];
+%distances = zeros(totLength,2);
+
+%databaseXYZs = zeros(totLength,3);
+%for k = 1:totLength
+    %databaseXYZs(k,:) = (databaseAvgRGBs{k,1});
+    %distances(k,1) = sqrt((d65(1,1)-databaseXYZs(k,1)).^2 + (d65(1,2)-databaseXYZs(k,2)).^2 + (d65(1,2)-databaseXYZs(k,3)).^2);
+    %distances(k,2) = k;
+%end
+
+%distances = sortrows(distances,"descend");
+%databaseXYZs = databaseXYZs';
+
+%databaseXYZs = [databaseXYZs(:,distances(1,2)), databaseXYZs(:,distances(2,2)), databaseXYZs(:,distances(3,2))];
+%plotGamut(databaseXYZs, "red");
+

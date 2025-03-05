@@ -47,7 +47,7 @@ for k = 1 : length(theFiles)
     baseFileName = theFiles(k).name;
     mustBeTextScalar(baseFileName);
     IMG = imread(append(filePathProc,baseFileName));
-    IMGLab = rgb2lab(IMG);
+    IMGLab = rgb2lab(im2double(IMG));
 
     if(size(IMG, 3) == 3)
         redChannel = IMG(:, :, 1);
