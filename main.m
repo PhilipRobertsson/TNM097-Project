@@ -1,5 +1,6 @@
 % Add folders and subfolders to path
 addpath("functions\") % Functions
+addpath("functions\scielab\") % Scielab
 addpath("images\processed\") % Processed Images
 [databaseAvgRGBs, databaseAvgLabs] = findAvgRGBDatabase(); % Get avrage rgb for database images
 
