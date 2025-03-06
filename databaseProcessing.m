@@ -90,7 +90,7 @@ end
 
 %montage(scaledImages, "Size", [10 20]);
 
-[databaseAvgRGBs, databaseAvgLabs] = findAvgRGBDatabase(); % Get avrage rgb for database images
+[databaseAvgRGBs, databaseAvgLabs] = findAvgDatabaseColours(); % Get avrage rgb for database images
 
 databaseAvgRGBsVec = zeros(3,totLength);
 databaseAvgLabsVec = zeros(4,totLength);

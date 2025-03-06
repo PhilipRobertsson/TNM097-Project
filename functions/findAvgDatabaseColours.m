@@ -1,4 +1,4 @@
-function [cellAvgRGB, cellAvgLab] = findAvgRGBDatabase()
+function [cellAvgRGB, cellAvgLab] = findAvgDatabaseColours()
 %Creates cell of all avarage rgb values in the database
 addpath("images\processed\");
 filePathProc = 'images\processed\';
@@ -49,69 +49,24 @@ for k = 1 : length(theFiles)
     IMG = imread(append(filePathProc,baseFileName));
     IMGLab = rgb2lab(im2double(IMG));
 
+    % Full colour RGB image
     if(size(IMG, 3) == 3)
         redChannel = IMG(:, :, 1);
         greenChannel = IMG(:, :, 2);
         blueChannel = IMG(:, :, 3);
-    else
+    else % Grayscale image
         redChannel = IMG;
         greenChannel = IMG;
         blueChannel = IMG;
     end
 
+    % Lab image
     LChannel = IMGLab(:,:,1);
     aChannel = IMGLab(:,:,2);
     bChannel = IMGLab(:,:,3);
     
-    %totR = 0;
-    %totG = 0;
-    %totB = 0;
-    %totV = 0;
 
-    %totL = 0;
-    %tota = 0;
-    %totb = 0;
-    
-    % Total values
-    %for r = 1 : size(IMG,2)
-        %for c = 1 : size(IMG,1)
-            %if(size(IMG,3) > 1) % RGB images
-                %totR = totR + double(IMG(c,r,1));
-                %totG = totG + double(IMG(c,r,2));
-                %totB = totB + double(IMG(c,r,3));
-                
-                %totL = totL + IMGLab(c,r,1);
-                %tota = tota + IMGLab(c,r,2);
-                %totb = totb + IMGLab(c,r,3);
-            %else % Grayscale images
-                %totV = totV + double(IMG(c,r));
-            %end
-        %end
-    %end
-    
-    % Total size of image
-    %IMGSize = size(IMG,1)*size(IMG,2);
-
-    % If grayscale set RGB to identical values
-    %if(size(IMG,3) == 1)
-        %totR = totV;
-        %totG = totV;
-        %totB = totV;
-
-        %totL = totV;
-        %tota = 0;
-        %totb = 0;
-    %end
-
-    % Find avrage
-    %avgR = floor(totR/(IMGSize));
-    %avgG = floor(totG/(IMGSize));
-    %avgB = floor(totB/(IMGSize));
-
-    %avgL = floor(totL/(IMGSize));
-    %avga = floor(tota/(IMGSize));
-    %avgb = floor(totb/(IMGSize));
-
+    % Find avrages for RGB and Lab images
     avgR = floor(mean(redChannel(:)));
     avgG = floor(mean(greenChannel(:)));
     avgB = floor(mean(blueChannel(:)));

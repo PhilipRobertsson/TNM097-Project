@@ -2,7 +2,7 @@
 addpath("functions\") % Functions
 addpath("functions\scielab\") % Scielab
 addpath("images\processed\") % Processed Images
-[databaseAvgRGBs, databaseAvgLabs] = findAvgRGBDatabase(); % Get avrage rgb for database images
+[databaseAvgRGBs, databaseAvgLabs] = findAvgDatabaseColours(); % Get avrage rgb for database images
 
 % Image loading
 filterspec = {'*.jpg;*.tif;*.png;*.gif','All Image Files'};
@@ -11,11 +11,10 @@ imgInput = imread(fullfile(path,file));
 
 %imshow(imgInput);
 
+% Create cell containing "boxes" from the input image
 imgCell = splitIntoSegments(imgInput);
 
-%avgRGBTest = findAvgRGB(imgCell(1,1));
-
-% Cell containing avrage RGB values for each cell in imgCell
+% Cell containing avrage colour values for each cell in imgCell
 avgRGBCell = cell(size(imgCell));
 avgLabCell = cell(size(imgCell));
 
@@ -29,7 +28,7 @@ for r = 1 : numPlotsR
         % Draw specified cell
         %imshow(imgCell{r,c});
         % Take avrage rgb
-        [avgRGBCell{r,c}, avgLabCell{r,c}] = findAvgRGB(imgCell(r,c));
+        [avgRGBCell{r,c}, avgLabCell{r,c}] = findAvgColours(imgCell(r,c));
         % Increment the subplot to the next location.
         %plotIndex = plotIndex + 1;
     end
