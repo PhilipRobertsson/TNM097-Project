@@ -1,8 +1,11 @@
 % Add folders and subfolders to path
 addpath("functions\") % Functions
 addpath("functions\scielab\") % Scielab
-addpath("images\processed\") % Processed Images
-[databaseAvgRGBs, databaseAvgLabs] = findAvgDatabaseColours(); % Get avrage rgb for database images
+addpath("images\processed\") % Database 1
+addpath("images\processedFirstDownscale\") % Database 2
+addpath("images\processedSecondDownscale\") % Database 3
+databaseFilePath = "images\processed\";
+[databaseAvgRGBs, databaseAvgLabs] = findAvgDatabaseColours(databaseFilePath); % Get avrage rgb for database images
 
 % Image loading
 filterspec = {'*.jpg;*.tif;*.png;*.gif','All Image Files'};
@@ -57,21 +60,21 @@ end
 outputIMGmat = cell2mat(outputIMG);
 outputIMGmatLab = cell2mat(outputIMGLab);
 %imshow(outputIMGmat);
-%imshow(outputIMGmatLab);
-montage({outputIMGmat, outputIMGmatLab});
+imshow(outputIMGmatLab);
+%montage({outputIMGmat, outputIMGmatLab});
 
-[mse, snr, snrHVS, meanDistE, maxDistE, meanDistEHVS, maxDistHVS, meanSCIELAB] = getQualityMetrics(imgInput, outputIMGmat);
+%[mse, snr, snrHVS, meanDistE, maxDistE, meanDistEHVS, maxDistHVS, meanSCIELAB] = getQualityMetrics(imgInput, outputIMGmat);
 
-fprintf('\n The mean-squared error for the RGB reproduction is: %0.2f\n', mse);
-fprintf('\n The signal to noise ratio for the RGB reproduction is:  %0.2f\n', snr);
-fprintf('\n The signal to noise ratio for the RGB reproduction with HVS model is:  %0.2f\n', snrHVS);
-fprintf('\n The mean delta E value for the RGB reproduction is: %0.2f\n', meanDistE);
-fprintf('\n The max delta E value ratio for the RGB reproduction is:  %0.2f\n', maxDistE);
-fprintf('\n The mean delta E value for the RGB reproduction with HVS model is: %0.2f\n', meanDistEHVS);
-fprintf('\n The max delta E value ratio for the RGB reproduction with HVS model is:  %0.2f\n', maxDistHVS);
-fprintf('\n The mean  value S-CIELAB for the RGB reproduction is: %0.2f\n', meanSCIELAB);
+%fprintf('\n The mean-squared error for the RGB reproduction is: %0.2f\n', mse);
+%fprintf('\n The signal to noise ratio for the RGB reproduction is:  %0.2f\n', snr);
+%fprintf('\n The signal to noise ratio for the RGB reproduction with HVS model is:  %0.2f\n', snrHVS);
+%fprintf('\n The mean delta E value for the RGB reproduction is: %0.2f\n', meanDistE);
+%fprintf('\n The max delta E value ratio for the RGB reproduction is:  %0.2f\n', maxDistE);
+%fprintf('\n The mean delta E value for the RGB reproduction with HVS model is: %0.2f\n', meanDistEHVS);
+%fprintf('\n The max delta E value ratio for the RGB reproduction with HVS model is:  %0.2f\n', maxDistHVS);
+%fprintf('\n The mean  value S-CIELAB for the RGB reproduction is: %0.2f\n', meanSCIELAB);
 
-fprintf("\n");
+%fprintf("\n");
 
 [mse, snr, snrHVS, meanDistE, maxDistE,  meanDistEHVS, maxDistHVS, meanSCIELAB] = getQualityMetrics(imgInput, outputIMGmatLab);
 

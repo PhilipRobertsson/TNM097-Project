@@ -3,6 +3,8 @@ clear;
 addpath("functions\") % Functions
 addpath("images\raw\") % Raw Images
 addpath("images\processed\") % Processed images
+addpath("images\processedFirstDownscale\") % Processed images after first downscale
+addpath("images\processedSecondDownscale\") % Processed images after second downscale
 
 filePathRaw = 'images\raw\';
 filePathProc = 'images\processed\';
@@ -52,12 +54,10 @@ for k = 1 : totLength
     end
 end
 
-%croppedImages = {};
-scaledImages = {};
+database1Images = {};
 
 for k = 1 : length(theFiles)
     baseFileName = theFiles(k).name;
-    fullFileName = fullfile(theFiles(k).folder, baseFileName);
     IMG = imread(append(filePathRaw,baseFileName));
     
     % Used to find rgb images not in true colour
@@ -85,40 +85,64 @@ for k = 1 : length(theFiles)
 
     fullFileName = fullfile(filePathProc, baseFileName);
     imwrite(IMGres, fullFileName);
-    scaledImages = [scaledImages, IMGres];
+    database1Images = [database1Images, IMGres];
 end
 
-%montage(scaledImages, "Size", [10 20]);
+%montage(database2Images, "Size", [10 20]);
 
-[databaseAvgRGBs, databaseAvgLabs] = findAvgDatabaseColours(); % Get avrage rgb for database images
+[databaseAvgRGBs, databaseAvgLabs] = findAvgDatabaseColours(filePathProc); % Get avrage rgb for database images
 
-databaseAvgRGBsVec = zeros(3,totLength);
-databaseAvgLabsVec = zeros(4,totLength);
+[databaseRemove, databaseKeep] = removeSimilar(databaseAvgLabs, 6.17);
 
-for k = 1:totLength
-    databaseAvgRGBsVec(:,k) = [databaseAvgRGBs{k,1}(1); databaseAvgRGBs{k,1}(2); databaseAvgRGBs{k,1}(3)] ./256;
-    databaseAvgLabsVec(:,k) = [databaseAvgLabs{k,1}(1); databaseAvgLabs{k,1}(2); databaseAvgLabs{k,1}(3); k];
+filePathProc2 = 'images\processedFirstDownscale\';
+
+database2Images = {};
+
+for  k = 1 : size(databaseKeep,1)
+    baseFileName = databaseKeep{k,2};
+    IMG = imread(append(filePathProc,baseFileName));
+
+    fullFileName = fullfile(filePathProc2, baseFileName);
+    imwrite(IMG, fullFileName);
+    database2Images = [database2Images, IMG];
 end
 
-databaseAvgRGBsVec = sortrows(databaseAvgRGBsVec.',1).';
-databaseAvgLabsVec = sortrows(databaseAvgLabsVec.',1).';
+%montage(database2Images);
 
-databaseAvgRamp = zeros(100,totLength,3);
-rampHeight = ones(100,totLength);
-databaseAvgRamp(:,:,1) = rampHeight .* databaseAvgLabsVec(1,:);
-databaseAvgRamp(:,:,2) = rampHeight .*databaseAvgLabsVec(2,:);
-databaseAvgRamp(:, :,3) =rampHeight .* databaseAvgLabsVec(3,:);
+[databaseSecondRemove, databaseSecondKeep] = removeSimilar(databaseKeep, 11.44);
 
-imshow(lab2rgb(databaseAvgRamp));
+filePathProc3 = 'images\processedSecondDownscale\';
 
-%hold on
-%plot(1:1:totLength, databaseAvgRGBsVec(1,:), "red");
+database3Images = {};
 
-%databaseAvgRGBsVec = sortrows(databaseAvgRGBsVec.',2).';
+for  k = 1 : size(databaseSecondKeep,1)
+    baseFileName = databaseSecondKeep{k,2};
+    IMG = imread(append(filePathProc2,baseFileName));
 
-%plot(1:1:totLength, databaseAvgRGBsVec(2,:), "green");
+    fullFileName = fullfile(filePathProc3, baseFileName);
+    imwrite(IMG, fullFileName);
+    database3Images = [database3Images, IMG];
+end
 
-%databaseAvgRGBsVec = sortrows(databaseAvgRGBsVec.',3).';
+%montage(database3Images);
 
-%plot(1:1:totLength, databaseAvgRGBsVec(3,:), "blue");
-%hold off
+%databaseInitialVec = sortrows(cell2vec(databaseAvgLabs).',1)';
+%databaseFirstKeepVec = sortrows(cell2vec(databaseKeep).',1)';
+%databaseSecondKeepVec = sortrows(cell2vec(databaseSecondKeep).',1)';
+
+%databaseAvgRamp = getColourRamp(databaseInitialVec, 100);
+%databaseFirstKeepRamp = getColourRamp(databaseFirstKeepVec, 100);
+%databaseSecondKeepRamp = getColourRamp(databaseSecondKeepVec, 100);
+
+%subplot(1, 3, 1);
+%imshow(lab2rgb(databaseAvgRamp));
+%title('Avrage Colours original database')
+
+%subplot(1, 3, 2);
+%imshow(lab2rgb(databaseFirstKeepRamp));
+%title('Avrage Colours to keep from database')
+
+%subplot(1, 3, 3);
+%imshow(lab2rgb(databaseSecondKeepRamp));
+%title('Avrage Colours to keep from first reduction')
+

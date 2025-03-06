@@ -1,7 +1,7 @@
-function [cellAvgRGB, cellAvgLab] = findAvgDatabaseColours()
+function [cellAvgRGB, cellAvgLab] = findAvgDatabaseColours(databaseFilePath)
 %Creates cell of all avarage rgb values in the database
-addpath("images\processed\");
-filePathProc = 'images\processed\';
+addpath(databaseFilePath);
+filePathProc = databaseFilePath;
 
 % Read all files in database
 filePatternPNG = fullfile(filePathProc, '*.png');
