@@ -124,7 +124,7 @@ for  k = 1 : size(databaseSecondKeep,1)
     database3Images = [database3Images, IMG];
 end
 
-%montage(database3Images);
+%montage(database3Images, "Size", [6 9]);
 
 %databaseInitialVec = sortrows(cell2vec(databaseAvgLabs).',1)';
 %databaseFirstKeepVec = sortrows(cell2vec(databaseKeep).',1)';

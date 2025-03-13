@@ -4,9 +4,9 @@ function [imgCell] = splitIntoSegments(imgInput)
 % Divide image into smaller segments
 
 if size(imgInput,1) >= size(imgInput,2)
-    segmentSize = floor(size(imgInput,1) * (5/300));
+    segmentSize = floor(size(imgInput,1) * (3/300));
 else
-    segmentSize = floor(size(imgInput,2) * (5/300));
+    segmentSize = floor(size(imgInput,2) * (3/300));
 end
 
 segmentSizeR = segmentSize; % R, rows
