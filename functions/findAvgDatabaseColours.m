@@ -1,35 +1,44 @@
 function [cellAvgRGB, cellAvgLab] = findAvgDatabaseColours(databaseFilePath)
-%Creates cell of all avarage rgb values in the database
+%Creates cell of all avarage colours in the database
+
 addpath(databaseFilePath);
 filePathProc = databaseFilePath;
 
-% Read all files in database
+% Define variables for the different file formats existent 
 filePatternPNG = fullfile(filePathProc, '*.png');
 filePatternJPG = fullfile(filePathProc, '*.jpg');
 filePatternJPEG = fullfile(filePathProc, '*.jpeg');
 
+% Define variables for the different file directories
 theFilesPNG = dir(filePatternPNG);
 theFilesJPG = dir(filePatternJPG);
 theFilesJPEG = dir(filePatternJPEG);
 
+% Total amount of files in the database
 totLength = length(theFilesJPEG) + length(theFilesJPG) + length(theFilesPNG);
 theFiles = struct("name",[],"folder",[]);
+
+% Used to define where to insert images from the directories
 structrow = 0;
 
+% Loop through the images in the database
 for k = 1 : totLength
 
+    % Make sure k is smaller than the amount of PNG images
     if k <= length(theFilesPNG)
         structrow = structrow + 1;
         theFiles(structrow).name = theFilesPNG(k,1).name;
         theFiles(structrow).folder = theFilesPNG(k,1).folder;
     end
-
+    
+    % Make sure k is smaller than the amount of JPEG images
     if k <= length(theFilesJPEG)
         structrow = structrow + 1;
         theFiles(structrow).name = theFilesJPEG(k,1).name;
         theFiles(structrow).folder = theFilesJPEG(k,1).folder;
     end
 
+    % Make sure k is smaller than the amount of JPG images
     if k <= length(theFilesJPG)
         structrow = structrow + 1;
         theFiles(structrow).name = theFilesJPG(k,1).name;

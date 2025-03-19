@@ -1,6 +1,5 @@
 function colourRamp = getColourRamp(vec, height)
-%GETCOLOURRAMP generates a colour ramp of specified height from the input
-%colour vector
+% Generates a colour ramp of specified height from the input colour vector
 
 rampHeight = ones(height,size(vec,2));
 

@@ -1,6 +1,7 @@
 function [databaseRemoves, databaseRemains] = removeSimilar(databaseAvgLab,threshold)
 % Removes images with avrage colours within the threshold from the database
 
+% Initializes the output cell arrays
 databaseRemoves = {};
 databaseRemains = {};
 
@@ -19,6 +20,7 @@ for k=1:size(databaseAvgLab,1)-1
     end
 end
 
+% Remove empty cells
 databaseRemoves =  reshape(databaseRemoves(~cellfun('isempty',databaseRemoves)), [], size(databaseRemoves,2));
 
 % Find which values should be kept
@@ -37,6 +39,7 @@ for k=1:size(databaseAvgLab,1)
     end
 end
 
+% Remove empty cells
 databaseRemains =  reshape(databaseRemains(~cellfun('isempty',databaseRemains)), [], size(databaseRemains,2));
 
 end

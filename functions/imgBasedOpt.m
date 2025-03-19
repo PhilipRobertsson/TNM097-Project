@@ -1,6 +1,8 @@
 function [databaseOpt] = imgBasedOpt(cMap, dBase, matchesPerSample)
-%imgBasedOpt Summary of this function goes here
+% Optimizes the database according to the colour map and amount of matches
+% per sample
 
+% Initalize output database, an index and a list of distances
 databaseOpt = {};
 dbIndex = 1;
 distances = {};
@@ -34,6 +36,7 @@ for k = 1:c
     distances = {};
 end
 
+% Convert from cell to table, remove duplicate values, convert back to cell
 databaseOpt = table2cell(unique(cell2table(databaseOpt)));
 
 end

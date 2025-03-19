@@ -1,5 +1,5 @@
 function [mse, snr, snrHVS, meanDeltaE, maxDeltaE, meanDeltaEHVS, maxDeltaEHVS, scielabMean] = getQualityMetrics(orgIMG,repIMG)
-%GETQUALITYMETRICS Summary of this function goes here
+%Extract quality metrics from current reproduction
 
 % Initial processing and data extraction
 [M, N, ~] = size(orgIMG);
@@ -31,8 +31,8 @@ maxDeltaE = max(deltaE(:));
 
 
 % Create a filter which represents a dot-size of 0.0847 at the viewing
-% distance 500mm
-f=MFTsp(15,0.0847,500);
+% distance 2000mm
+f=MFTsp(15,0.0847,2000);
 
 % Apply filter to each channel of the original image
 orgIMGR=conv2(orgIMG(:,:,1),f,'same');
@@ -90,7 +90,7 @@ orgIMGxyz = rgb2xyz(orgIMG);
 repIMGxyz = rgb2xyz(repIMG);
 
 % Calculate samples per degree, 78 inch or ~ 2 m viewing distance
-ppi = 157.35;
+ppi = 300;
 d = 78.7401575;
 samplePerDegree = ppi * d * tan(pi/180);
 CIED65 =  [95.05, 100, 108.9];

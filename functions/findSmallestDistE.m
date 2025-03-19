@@ -1,5 +1,5 @@
 function index = findSmallestDistE(segmentLab,databaseLabs)
-%FINDSMALLESTDISTE Summary of this function goes here
+% Finds the smallest Delta E distance between a segment avrage colour and the databse colours
 
 index = 1;
 smallestDist = inf;

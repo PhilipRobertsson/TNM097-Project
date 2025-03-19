@@ -1,4 +1,5 @@
 function [avgRGB,avgLab] = findAvgColours(cellInput)
+% Finds the avrage colour in a specific cell
 
 % Convert the cell to a normal image matrix
 imgSquare = cell2mat(cellInput);
@@ -29,5 +30,6 @@ avgL = floor(mean(LChannel(:)));
 avga = floor(mean(aChannel(:)));
 avgb = floor(mean(bChannel(:)));
 
+% Assign avrages to vectors
 avgRGB = [avgR, avgG, avgB];
 avgLab = [avgL, avga, avgb];
